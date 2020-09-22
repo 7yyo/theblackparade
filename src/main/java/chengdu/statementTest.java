@@ -18,7 +18,7 @@ public class statementTest {
 
 class StatmentJob extends Thread {
 
-    private static String url = "jdbc:mysql://172.16.4.194:4000/test?useServerPrepStmts=true&cachePrepStmts=true&prepStmtCacheSqlLimit=128&prepStmtCacheSize=5";
+    private static String url = "jdbc:mysql://172.16.4.194:4000/test";
     private static String username = "root";
     private static String password = "";
     private static int forCount = 10;
