@@ -1,3 +1,5 @@
+# noinspection SqlResolveForFile
+
 select index_name,
        p.store_id,
        count(s.region_id) cnt
