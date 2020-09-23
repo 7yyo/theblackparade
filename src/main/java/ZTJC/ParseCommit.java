@@ -42,11 +42,10 @@ class MySQLTask extends Thread {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
             connection.setAutoCommit(false);
-            String sql = "";
-            sql = "select * from t1 where id = ?";
+            String sql = "select * from t1 where id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             while(true){
-                preparedStatement.setString(1, "123");
+                preparedStatement.setString(1, "12345");
                 preparedStatement.execute();
                 connection.commit();
             }
