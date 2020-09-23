@@ -14,7 +14,7 @@ public class statementSingle {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
             connection.setAutoCommit(false);
-            String sql = "insert into t1 values(1,12345,1,1,1,1,1,1,1,1);";
+            String sql = "insert into t1 values(1,12345);";
             Statement statment = connection.createStatement();
             statment.executeUpdate(sql);
             connection.commit();

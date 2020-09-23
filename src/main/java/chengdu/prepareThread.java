@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.Random;
 
 public class prepareThread {
-    private static int threadNum = 10;
+    private static int threadNum = 5;
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         for (int i = 0; i < threadNum; i++) {
             Job job = new Job();
@@ -17,7 +17,8 @@ public class prepareThread {
 }
 
 class Job extends Thread {
-    private static String url = "jdbc:mysql://172.16.4.194:4000/test?useServerPrepStmts=true&cachePrepStmts=true&prepStmtCacheSqlLimit=128&prepStmtCacheSize=5";
+    // &prepStmtCacheSqlLimit=128&prepStmtCacheSize=5
+    private static String url = "jdbc:mysql://172.16.4.105:4000/test?useServerPrepStmts=true&cachePrepStmts=true";
     private static String username = "root";
     private static String password = "";
     private static int forCount = 10;
@@ -29,7 +30,7 @@ class Job extends Thread {
             Connection connection = DriverManager.getConnection(url, username, password);
             connection.setAutoCommit(false);
             Random random = new Random();
-            String insertSql = " insert into t1 values(1,?) ";
+            String insertSql = " insert into t1 values(1,?)";
             int id = random.nextInt(99);
             PreparedStatement preparedStatement = connection.prepareStatement(insertSql);
             while (true) {

@@ -17,9 +17,10 @@ public class prepareSingle {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(url, username, password);
             connection.setAutoCommit(false);
-            String insertSql = "insert into t1 values(1,?,1,1,1)";
+            String insertSql = "insert into t1 values(1,?);insert into t1 values(1,?);";
             PreparedStatement preparedStatement = connection.prepareStatement(insertSql);
             preparedStatement.setObject(1, 1);
+            preparedStatement.setObject(2, 1);
             preparedStatement.executeUpdate();
             connection.commit();
         } catch (ClassNotFoundException | SQLException classNotFoundException) {
