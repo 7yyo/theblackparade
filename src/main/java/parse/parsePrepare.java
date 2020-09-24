@@ -1,4 +1,6 @@
-package chengdu;
+package parse;
+
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Random;
 
-public class prepareThread {
+public class parsePrepare {
 
     private static int threadNum = 5;
 
@@ -19,9 +21,8 @@ public class prepareThread {
 }
 
 class Job extends Thread {
-
     // &prepStmtCacheSqlLimit=128&prepStmtCacheSize=5
-    private static String url = "jdbc:mysql://172.16.4.105:4000/test?useServerPrepStmts=true&cachePrepStmts=true&prepStmtCacheSqlLimit=1&prepStmtCacheSize=0";
+    private static String url = "jdbc:mysql://172.16.4.105:4000/test?useServerPrepStmts=true&cachePrepStmts=true&prepStmtCacheSqlLimit=8192&prepStmtCacheSize=100";
     private static String username = "root";
     private static String password = "";
     private static int forCount = 10;
@@ -35,13 +36,21 @@ class Job extends Thread {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(url, username, password);
             connection.setAutoCommit(false);
-            Random random = new Random();
-            String insertSql = "insert into t1 values(1,?)";
+            String insertSql = "insert into t2 values(?,?,?,?,?,?,?,?,?,?,?)";
             preparedStatement = connection.prepareStatement(insertSql);
-            int id = random.nextInt(99);
             while (true) {
                 for (int i = 0; i < 50; i++) {
-                    preparedStatement.setObject(1, id);
+                    preparedStatement.setObject(1, i++);
+                    preparedStatement.setObject(2,RandomStringUtils.random(40));
+                    preparedStatement.setObject(3,RandomStringUtils.random(40));
+                    preparedStatement.setObject(4,RandomStringUtils.random(40));
+                    preparedStatement.setObject(5,RandomStringUtils.random(40));
+                    preparedStatement.setObject(6,RandomStringUtils.random(40));
+                    preparedStatement.setObject(7,RandomStringUtils.random(40));
+                    preparedStatement.setObject(8,RandomStringUtils.random(40));
+                    preparedStatement.setObject(9,RandomStringUtils.random(40));
+                    preparedStatement.setObject(10,RandomStringUtils.random(40));
+                    preparedStatement.setObject(11,RandomStringUtils.random(40));
                     preparedStatement.addBatch();
                 }
                 preparedStatement.executeBatch();
@@ -49,7 +58,7 @@ class Job extends Thread {
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 preparedStatement.close();
                 connection.close();
@@ -59,3 +68,6 @@ class Job extends Thread {
         }
     }
 }
+
+
+

@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Random;
 
 public class prepareSingle {
 
@@ -13,18 +12,26 @@ public class prepareSingle {
     private static String password = "";
 
     public static void main(String[] args) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(url, username, password);
+            connection = DriverManager.getConnection(url, username, password);
             connection.setAutoCommit(false);
-            String insertSql = "insert into t1 values(1,?);insert into t1 values(1,?);";
-            PreparedStatement preparedStatement = connection.prepareStatement(insertSql);
+            String insertSql = "insert into t1 values(1,?);";
+            preparedStatement = connection.prepareStatement(insertSql);
             preparedStatement.setObject(1, 1);
-            preparedStatement.setObject(2, 1);
-            preparedStatement.executeUpdate();
+            preparedStatement.execute();
             connection.commit();
         } catch (ClassNotFoundException | SQLException classNotFoundException) {
             classNotFoundException.printStackTrace();
+        } finally {
+            try {
+                preparedStatement.close();
+                connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 }

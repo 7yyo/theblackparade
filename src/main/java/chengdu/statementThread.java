@@ -4,7 +4,9 @@ import java.sql.*;
 import java.util.Random;
 
 public class statementThread {
+
     private static int threadNum = 5;
+
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         for (int i = 0; i < threadNum; i++) {
             StatmentJob job = new StatmentJob();
@@ -14,24 +16,35 @@ public class statementThread {
 }
 
 class StatmentJob extends Thread {
+
     private static String url = "jdbc:mysql://172.16.4.105:4000/test";
     private static String username = "root";
     private static String password = "";
+
     @Override
     public void run() {
+        Connection connection = null;
+        Statement statment = null;
         try {
             System.out.println("start thread : " + Thread.currentThread().getId());
             Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(url, username, password);
+            connection = DriverManager.getConnection(url, username, password);
             connection.setAutoCommit(false);
             String sql = "insert into t1 values(1,1)";
-            Statement statment = connection.createStatement();
+            statment = connection.createStatement();
             while (true) {
                 statment.executeUpdate(sql);
                 connection.commit();
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                statment.close();
+                connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
         }
     }
 }
