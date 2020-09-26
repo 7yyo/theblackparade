@@ -1,24 +1,21 @@
 package parse;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import util.jdbcUtil;
+import util.threadPoolUtil;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class parsePrepare {
     private static int threadNum = 50;
+
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        for (int i = 0; i < threadNum; i++) {
-            Job job = new Job();
-            job.start();
-        }
+        threadPoolUtil.startJob(threadNum, new Job());
     }
 }
 
-class Job extends Thread {
+class Job implements Runnable {
     private final static String ip = "172.16.4.104:4000";
     private final static String db = "test";
     private final static String parameter = "useServerPrepStmts=true&cachePrepStmts?useConfigs=maxPerformance&sessionVariables=tidb_batch_commit=1&rewriteBatchedStatements=true&allowMultiQueries=true";
@@ -26,6 +23,8 @@ class Job extends Thread {
     private final static String pwd = "";
     private final static int jdbcVersion = 5;
     private final static int isAutoCommit = 0;
+    private final static int batchNum = 50;
+    private final static int valuesNum = 26;
 
     @Override
     public void run() {
@@ -34,22 +33,12 @@ class Job extends Thread {
         try {
             System.out.println("start thread : " + Thread.currentThread().getId());
             connection = jdbcUtil.getConncetion(ip, db, parameter, user, pwd, jdbcVersion, isAutoCommit);
-            String insertSql = "insert into t2 values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            preparedStatement = connection.prepareStatement(insertSql);
+            String sql = "insert into t2 values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            preparedStatement = jdbcUtil.initPrepareStatement(connection, sql);
             while (true) {
-                for (int i = 0; i < 50; i++) {
-                    preparedStatement.setObject(1, i++);
-                    for (int j = 2; j < 26; j++) {
-                        preparedStatement.setString(j, RandomStringUtils.randomAlphabetic(50));
-                    }
-                    preparedStatement.addBatch();
-                }
-                System.out.println(preparedStatement.toString());
-                preparedStatement.executeBatch();
-                connection.commit();
+                jdbcUtil.executePrepareBatch(preparedStatement, batchNum, valuesNum, sql);
+                jdbcUtil.commit(connection);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         } finally {
             jdbcUtil.closePrepareStatement(preparedStatement);
             jdbcUtil.closeConnection(connection);

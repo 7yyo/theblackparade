@@ -8,6 +8,7 @@ public class jdbcUtil {
 
     private final static int jdbc_5 = 5;
     private final static int jdbc_8 = 8;
+    private final static int colLength = 50;
 
     /*get connection*/
     public static Connection getConncetion(String ip, String database, String parameter, String username, String password, int jdbcVersion, int isAutoCommit) {
@@ -81,7 +82,7 @@ public class jdbcUtil {
         try {
             for (int i = 0; i < batchNum; i++) {
                 for (int j = 1; j < valuesNum + 1; j++) {
-                    preparedStatement.setObject(j, RandomStringUtils.randomAlphabetic(50));
+                    preparedStatement.setObject(j, RandomStringUtils.randomAlphabetic(colLength));
                 }
                 preparedStatement.addBatch();
             }

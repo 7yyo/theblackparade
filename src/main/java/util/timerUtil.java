@@ -6,14 +6,18 @@ import java.util.TimerTask;
 public class timerUtil {
     public static void timerTool(int delayTime, int time) {
         Timer timer = new Timer();
-        timeTask task = new timeTask();
+        timeTask task = new timeTask(delayTime, time);
         timer.schedule(task, delayTime, time);
     }
 }
 
 class timeTask extends TimerTask {
-    int durationTime = 0;
-    int time = 600;
+    private int durationTime;
+    private int time;
+    public timeTask(int durationTime, int time) {
+        this.durationTime = durationTime;
+        this.time = time;
+    }
     @Override
     public void run() {
         if (durationTime < time) {
