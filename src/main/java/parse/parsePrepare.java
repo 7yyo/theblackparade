@@ -9,9 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class parsePrepare {
-
     private static int threadNum = 50;
-
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         for (int i = 0; i < threadNum; i++) {
             Job job = new Job();
@@ -21,7 +19,6 @@ public class parsePrepare {
 }
 
 class Job extends Thread {
-
     private final static String ip = "172.16.4.104:4000";
     private final static String db = "test";
     private final static String parameter = "useServerPrepStmts=true&cachePrepStmts?useConfigs=maxPerformance&sessionVariables=tidb_batch_commit=1&rewriteBatchedStatements=true&allowMultiQueries=true";
@@ -43,10 +40,11 @@ class Job extends Thread {
                 for (int i = 0; i < 50; i++) {
                     preparedStatement.setObject(1, i++);
                     for (int j = 2; j < 26; j++) {
-                        preparedStatement.setString(j,RandomStringUtils.randomAlphabetic(50));
+                        preparedStatement.setString(j, RandomStringUtils.randomAlphabetic(50));
                     }
                     preparedStatement.addBatch();
                 }
+                System.out.println(preparedStatement.toString());
                 preparedStatement.executeBatch();
                 connection.commit();
             }

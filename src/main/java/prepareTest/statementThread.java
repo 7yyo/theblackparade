@@ -1,49 +1,43 @@
 package prepareTest;
 
+import org.apache.commons.lang3.RandomStringUtils;
+import util.jdbcUtil;
+import util.threadPoolUtil;
+
 import java.sql.*;
 
 public class statementThread {
-
     private static int threadNum = 5;
-
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        for (int i = 0; i < threadNum; i++) {
-            StatmentJob job = new StatmentJob();
-            job.start();
-        }
+        threadPoolUtil.startJob(1, new StatmentJob());
     }
 }
 
 class StatmentJob extends Thread {
-
-    private static String url = "jdbc:mysql://172.16.4.105:4000/test";
-    private static String username = "root";
-    private static String password = "";
-
+    private final static String ip = "172.16.4.194:4000";
+    private final static String db = "test";
+    private final static String parameter = "";
+    private final static String user = "root";
+    private final static String pwd = "";
+    private final static int jdbcVersion = 5;
+    private final static int isAutoCommit = 1;
     @Override
     public void run() {
         Connection connection = null;
-        Statement statment = null;
+        Statement statement = null;
         try {
             System.out.println("start thread : " + Thread.currentThread().getId());
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
-            connection.setAutoCommit(false);
-            String sql = "insert into t1 values(1,1)";
-            statment = connection.createStatement();
+            connection = jdbcUtil.getConncetion(ip, db, parameter, user, pwd, jdbcVersion, isAutoCommit);
+            jdbcUtil.initStatement(connection);
             while (true) {
-                statment.executeUpdate(sql);
-                connection.commit();
+                String sql = "insert into t1(c1,c2) values('" + RandomStringUtils.randomAlphabetic(50) + "','" + RandomStringUtils.randomAlphabetic(50) + "')";
+                statement = jdbcUtil.initStatement(connection);
+                jdbcUtil.executeStatement(statement, sql);
+                jdbcUtil.commit(connection);
             }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
         } finally {
-            try {
-                statment.close();
-                connection.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+            jdbcUtil.closeStatement(statement);
+            jdbcUtil.closeConnection(connection);
         }
     }
 }

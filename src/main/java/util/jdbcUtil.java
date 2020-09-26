@@ -2,10 +2,7 @@ package util;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class jdbcUtil {
 
@@ -47,6 +44,17 @@ public class jdbcUtil {
         return connection;
     }
 
+    /* init statement*/
+    public static Statement initStatement(Connection connection) {
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return statement;
+    }
+
     /* init prepareStatement*/
     public static PreparedStatement initPrepareStatement(Connection connection, String sql) {
         PreparedStatement preparedStatement = null;
@@ -58,8 +66,18 @@ public class jdbcUtil {
         return preparedStatement;
     }
 
-    /* begin to execute prepare statement*/
-    public static void executePrepareBatch(PreparedStatement preparedStatement, int batchNum, int valuesNum) {
+    public static void executeStatement(Statement statement, String sql) {
+        try {
+            System.out.println(sql);
+            statement.execute(sql);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+
+    /* begin to execute prepare batch*/
+    public static void executePrepareBatch(PreparedStatement preparedStatement, int batchNum, int valuesNum, String sql) {
         try {
             for (int i = 0; i < batchNum; i++) {
                 for (int j = 1; j < valuesNum + 1; j++) {
@@ -68,6 +86,7 @@ public class jdbcUtil {
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();
+            System.out.println(preparedStatement.toString());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -89,6 +108,17 @@ public class jdbcUtil {
         if (preparedStatement != null) {
             try {
                 preparedStatement.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+    }
+
+    /* close statement*/
+    public static void closeStatement(Statement statement) {
+        if (statement != null) {
+            try {
+                statement.close();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
