@@ -26,7 +26,7 @@ public class jdbcUtil {
                     break;
             }
             connection = DriverManager.getConnection(url, username, password);
-            if (connection != null){
+            if (connection != null) {
                 switch (isAutoCommit) {
                     case 0:
                         connection.setAutoCommit(true);
@@ -37,8 +37,8 @@ public class jdbcUtil {
                 }
                 System.out.println("thread " + Thread.currentThread().getId() + " is start ");
                 System.out.println("url = " + url);
-                System.out.println("autocommit = " + isAutoCommit );
-            }else{
+                System.out.println("autocommit = " + isAutoCommit);
+            } else {
                 System.out.println("init connection fail");
             }
         } catch (ClassNotFoundException | SQLException e) {
@@ -74,8 +74,8 @@ public class jdbcUtil {
     }
 
     /* commit */
-    public static void commit(Connection connection){
-        if(connection != null){
+    public static void commit(Connection connection) {
+        if (connection != null) {
             try {
                 connection.commit();
             } catch (SQLException throwables) {
