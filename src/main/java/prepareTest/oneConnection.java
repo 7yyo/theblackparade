@@ -1,14 +1,13 @@
 package prepareTest;
 
-import com.sun.tools.classfile.ConstantPool;
-import config.jdbcUtil;
+import util.jdbcUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Random;
 
-public class OneConnection {
+public class oneConnection {
 
     private final static String ip = "172.16.4.104:4000";
     private final static String db = "test";
@@ -19,7 +18,7 @@ public class OneConnection {
     private final static int isAutoCommit = 0;
     private static int threadNum = 5;
 
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+    public static void main(String[] args) {
         Connection connection = null;
         connection = jdbcUtil.getConncetion(ip, db, parameter, user, pwd, jdbcVersion, isAutoCommit);
         for (int i = 0; i < threadNum; i++) {
@@ -32,7 +31,6 @@ public class OneConnection {
 class OneConnectionJob extends Thread {
 
     private Connection connection;
-
     public OneConnectionJob(Connection connection) {
         this.connection = connection;
     }

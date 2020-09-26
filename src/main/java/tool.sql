@@ -1,4 +1,6 @@
 # noinspection SqlResolveForFile
+
+#SQL region status
 select index_name,
        p.store_id,
        count(s.region_id) cnt

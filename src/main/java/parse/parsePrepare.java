@@ -1,6 +1,7 @@
 package parse;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import util.jdbcUtil;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,10 +22,13 @@ public class parsePrepare {
 
 class Job extends Thread {
 
-    private static String url = "jdbc:mysql://172.16.4.105:4000/test?useServerPrepStmts=true&cachePrepStmts=true&prepStmtCacheSqlLimit=81920&prepStmtCacheSize=1000&rewriteBatchedStatements=true&allowMultiQueries=true";
-    private static String username = "root";
-    private static String password = "";
-    private static int mutilCount = 26;
+    private final static String ip = "172.16.4.104:4000";
+    private final static String db = "test";
+    private final static String parameter = "useServerPrepStmts=true&cachePrepStmts?useConfigs=maxPerformance&sessionVariables=tidb_batch_commit=1&rewriteBatchedStatements=true&allowMultiQueries=true";
+    private final static String user = "root";
+    private final static String pwd = "";
+    private final static int jdbcVersion = 5;
+    private final static int isAutoCommit = 0;
 
     @Override
     public void run() {
@@ -32,31 +36,25 @@ class Job extends Thread {
         PreparedStatement preparedStatement = null;
         try {
             System.out.println("start thread : " + Thread.currentThread().getId());
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, password);
-            connection.setAutoCommit(false);
+            connection = jdbcUtil.getConncetion(ip, db, parameter, user, pwd, jdbcVersion, isAutoCommit);
             String insertSql = "insert into t2 values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             preparedStatement = connection.prepareStatement(insertSql);
             while (true) {
-                for (int i = 0; i < 500; i++) {
+                for (int i = 0; i < 50; i++) {
                     preparedStatement.setObject(1, i++);
-                    for (int j = 2; j < mutilCount; j++) {
-                        preparedStatement.setObject(j, RandomStringUtils.randomAlphabetic(50));
+                    for (int j = 2; j < 26; j++) {
+                        preparedStatement.setString(j,RandomStringUtils.randomAlphabetic(50));
                     }
                     preparedStatement.addBatch();
                 }
                 preparedStatement.executeBatch();
                 connection.commit();
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            try {
-                preparedStatement.close();
-                connection.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+            jdbcUtil.closePrepare(preparedStatement);
+            jdbcUtil.closeConnection(connection);
         }
     }
 }

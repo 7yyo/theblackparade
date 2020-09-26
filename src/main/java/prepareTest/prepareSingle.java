@@ -1,9 +1,8 @@
 package prepareTest;
 
-import config.jdbcUtil;
+import util.jdbcUtil;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -15,18 +14,18 @@ public class prepareSingle {
     private final static String user = "root";
     private final static String pwd = "";
     private final static int jdbcVersion = 5;
-    private final static int isAutoCommit = 1;
+    private final static int isAutoCommit = 0;
+
+    private final static String sql = "insert into t1 values(1,?)";
 
     public static void main(String[] args) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         try {
-            connection = jdbcUtil.getConncetion(ip, db, parameter, user, pwd, jdbcVersion,isAutoCommit);
-            String insertSql = "insert into t3 values(1,?)";
-            preparedStatement = connection.prepareStatement(insertSql);
-            preparedStatement.setInt(1, 123456789);
+            connection = jdbcUtil.getConncetion(ip, db, parameter, user, pwd, jdbcVersion, isAutoCommit);
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, 1234567890);
             preparedStatement.executeUpdate();
-            connection.commit();
         } catch (SQLException classNotFoundException) {
             classNotFoundException.printStackTrace();
         } finally {
