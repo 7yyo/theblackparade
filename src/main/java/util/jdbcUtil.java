@@ -26,18 +26,21 @@ public class jdbcUtil {
                     break;
             }
             connection = DriverManager.getConnection(url, username, password);
-            switch (isAutoCommit) {
-                case 0:
-                    connection.setAutoCommit(true);
-                    break;
-                case 1:
-                    connection.setAutoCommit(false);
-                    break;
+            if (connection != null){
+                switch (isAutoCommit) {
+                    case 0:
+                        connection.setAutoCommit(true);
+                        break;
+                    case 1:
+                        connection.setAutoCommit(false);
+                        break;
+                }
+                System.out.println("thread " + Thread.currentThread().getId() + " is start ");
+                System.out.println("url = " + url);
+                System.out.println("autocommit = " + isAutoCommit );
+            }else{
+                System.out.println("init connection fail");
             }
-            connection.setAutoCommit(false);
-            System.out.println("thread " + Thread.currentThread().getId() + " is start ");
-            System.out.println("url = " + url);
-            System.out.println("autocommit = " + isAutoCommit );
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -82,7 +85,7 @@ public class jdbcUtil {
     }
 
     /* close preparestatment */
-    public static void closePrepare(PreparedStatement preparedStatement) {
+    public static void closePrepareStatement(PreparedStatement preparedStatement) {
         if (preparedStatement != null) {
             try {
                 preparedStatement.close();

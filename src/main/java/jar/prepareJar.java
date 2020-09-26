@@ -39,7 +39,7 @@ class Job extends Thread {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {
-            jdbcUtil.closePrepare(preparedStatement);
+            jdbcUtil.closePrepareStatement(preparedStatement);
             jdbcUtil.closeConnection(connection);
         }
     }

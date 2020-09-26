@@ -40,12 +40,14 @@ class Job extends Thread {
         try {
             connection = jdbcUtil.getConncetion(ip, db, parameter, user, pwd, jdbcVersion, isAutoCommit);
             preparedStatement = jdbcUtil.initPrepareStatement(connection, sql);
-            while (true) {
-                jdbcUtil.executePrepareBatch(preparedStatement, 10, 2);
-                jdbcUtil.commit(connection);
+            if (preparedStatement != null){
+                while (true) {
+                    jdbcUtil.executePrepareBatch(preparedStatement, 10, 2);
+                    jdbcUtil.commit(connection);
+                }
             }
         } finally {
-            jdbcUtil.closePrepare(preparedStatement);
+            jdbcUtil.closePrepareStatement(preparedStatement);
             jdbcUtil.closeConnection(connection);
         }
     }
