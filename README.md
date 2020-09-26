@@ -1,2 +1,1 @@
-# jdbc
-My JDBC tool !
+# JDBC , new SQL 测试工具
