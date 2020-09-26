@@ -4,7 +4,6 @@ import util.jdbcUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 public class prepareSingle {
     private final static String ip = "172.16.4.194:4000";
@@ -17,7 +16,6 @@ public class prepareSingle {
     private final static String sql = "insert into t1(c1,c2) values(?,?)";
     private final static int batchNum = 10;
     private final static int valuesNum = 2;
-
     public static void main(String[] args) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;

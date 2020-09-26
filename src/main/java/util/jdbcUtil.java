@@ -67,6 +67,7 @@ public class jdbcUtil {
         return preparedStatement;
     }
 
+    /* begin to execute statement*/
     public static void executeStatement(Statement statement, String sql) {
         try {
             System.out.println(sql);

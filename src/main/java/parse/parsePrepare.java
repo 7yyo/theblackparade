@@ -25,7 +25,7 @@ class Job implements Runnable {
     private final static int isAutoCommit = 0;
     private final static int batchNum = 50;
     private final static int valuesNum = 26;
-
+    private final static String sql = "insert into t2 values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     @Override
     public void run() {
         Connection connection = null;
@@ -33,7 +33,6 @@ class Job implements Runnable {
         try {
             System.out.println("start thread : " + Thread.currentThread().getId());
             connection = jdbcUtil.getConncetion(ip, db, parameter, user, pwd, jdbcVersion, isAutoCommit);
-            String sql = "insert into t2 values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             preparedStatement = jdbcUtil.initPrepareStatement(connection, sql);
             while (true) {
                 jdbcUtil.executePrepareBatch(preparedStatement, batchNum, valuesNum, sql);
