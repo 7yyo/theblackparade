@@ -12,11 +12,9 @@ public class prepareJar {
 
 class Job extends Thread {
 
-    // &prepStmtCacheSqlLimit=128&prepStmtCacheSize=5
-    private static String url = "jdbc:mysql://172.16.4.105:4000/test?useServerPrepStmts=true&cachePrepStmts=true";
+    private static String url = "jdbc:mysql://localhost:4000/test?useServerPrepStmts=true&cachePrepStmts=true";
     private static String username = "root";
     private static String password = "";
-    private static int forCount = 10;
 
     @Override
     public void run() {

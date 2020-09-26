@@ -1,4 +1,4 @@
-package chengdu;
+package prepareTest;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -6,11 +6,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Random;
 
 public class parsePrepare {
 
-    private static int threadNum = 25;
+    private static int threadNum = 50;
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         for (int i = 0; i < threadNum; i++) {
@@ -21,8 +20,8 @@ public class parsePrepare {
 }
 
 class Job extends Thread {
-    // &prepStmtCacheSqlLimit=128&prepStmtCacheSize=5
-    private static String url = "jdbc:mysql://172.16.4.105:4000/test?useServerPrepStmts=true&cachePrepStmts=true&prepStmtCacheSqlLimit=8192&prepStmtCacheSize=100";
+
+    private static String url = "jdbc:mysql://172.16.4.105:4000/test?useServerPrepStmts=true&cachePrepStmts=true&prepStmtCacheSqlLimit=81920&prepStmtCacheSize=1000&rewriteBatchedStatements=true&allowMultiQueries=true";
     private static String username = "root";
     private static String password = "";
     private static int mutilCount = 26;
@@ -39,7 +38,7 @@ class Job extends Thread {
             String insertSql = "insert into t2 values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             preparedStatement = connection.prepareStatement(insertSql);
             while (true) {
-                for (int i = 0; i < 50; i++) {
+                for (int i = 0; i < 500; i++) {
                     preparedStatement.setObject(1, i++);
                     for (int j = 2; j < mutilCount; j++) {
                         preparedStatement.setObject(j, RandomStringUtils.randomAlphabetic(50));

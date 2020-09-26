@@ -1,7 +1,6 @@
-package chengdu;
+package prepareTest;
 
 import java.sql.*;
-import java.util.Random;
 
 public class statementThread {
 

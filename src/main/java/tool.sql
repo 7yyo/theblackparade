@@ -1,5 +1,4 @@
 # noinspection SqlResolveForFile
-
 select index_name,
        p.store_id,
        count(s.region_id) cnt
@@ -11,4 +10,5 @@ where s.table_name = "sbtest1"
 group by index_name, p.store_id
 order by index_name, cnt
     desc
+#--------------#
 
