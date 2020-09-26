@@ -56,7 +56,7 @@ public class jdbcUtil {
     }
 
     /* begin to execute prepare statement*/
-    public static void executePrepare(PreparedStatement preparedStatement, int batchNum, int valuesNum) {
+    public static void executePrepareBatch(PreparedStatement preparedStatement, int batchNum, int valuesNum) {
         try {
             for (int i = 0; i < batchNum; i++) {
                 for (int j = 1; j < valuesNum + 1; j++) {
