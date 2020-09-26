@@ -1,2 +1,1 @@
-# jdbc
-My JDBC tool !
+# new SQL
