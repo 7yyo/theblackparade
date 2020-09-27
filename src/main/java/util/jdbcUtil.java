@@ -10,7 +10,7 @@ public class jdbcUtil {
     private final static int jdbc_8 = 8;
     private final static int colLength = 50;
 
-    /*get connection*/
+    /* get connection */
     public static Connection getConncetion(String ip, String database, String parameter, String username, String password, int jdbcVersion, int isAutoCommit) {
         String url = "jdbc:mysql://" + ip + "/" + database + "?" + parameter;
         Connection connection = null;

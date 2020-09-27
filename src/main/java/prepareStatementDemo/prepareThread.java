@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class prepareThread {
-    private static int threadNum = 2;
+    private static int threadNum = 200;
     public static void main(String[] args) {
         threadPoolUtil.startJob(threadNum, new prepareJob());
     }
@@ -22,7 +22,7 @@ class prepareJob implements Runnable {
     private final static int jdbcVersion = 5;
     private final static int isAutoCommit = 1;
     private final static String sql = "insert into t1(c1,c2) values(?,?)";
-    private final static int batchNum = 10;
+    private final static int batchNum = 500;
     private final static int valuesNum = 2;
     @Override
     public void run() {
