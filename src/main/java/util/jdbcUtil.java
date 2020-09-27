@@ -94,6 +94,17 @@ public class jdbcUtil {
         }
     }
 
+    /* rollback */
+    public static void rollback(Connection connection){
+        if(connection != null){
+            try {
+                connection.rollback();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+    }
+
     /* commit */
     public static void commit(Connection connection) {
         if (connection != null) {
