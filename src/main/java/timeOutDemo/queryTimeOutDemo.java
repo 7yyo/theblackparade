@@ -17,7 +17,6 @@ public class queryTimeOutDemo {
             preparedStatement.setQueryTimeout(1);
             System.out.println("begin to execute = " + sql);
             preparedStatement.execute();
-
         } finally {
             if (preparedStatement != null) preparedStatement.close();
             if (connection != null) connection.close();
