@@ -8,6 +8,8 @@ public class jdbcUtil {
 
     private final static int jdbc_5 = 5;
     private final static int jdbc_8 = 8;
+    private final static int auto_commit = 0;
+    private final static int no_auto_commit = 1;
     private final static int colLength = 50;
 
     /* get connection */
@@ -26,10 +28,10 @@ public class jdbcUtil {
             connection = DriverManager.getConnection(url, username, password);
             if (connection != null) {
                 switch (isAutoCommit) {
-                    case 0:
+                    case auto_commit:
                         connection.setAutoCommit(true);
                         break;
-                    case 1:
+                    case no_auto_commit:
                         connection.setAutoCommit(false);
                         break;
                 }
