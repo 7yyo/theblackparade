@@ -7,7 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class socketTimeOut {
+public class socketTimeOutDemo {
     private final static String url = "jdbc:mysql://172.16.4.104:4000/test?useServerPrepStmts=true&cachePrepStmts=true&socketTimeout=1";
     private final static String username = "root";
     private final static String password = "yuyang@123";
