@@ -5,7 +5,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import java.sql.*;
 
 public class statementSimple {
-    private final static String url = "jdbc:mysql:172.16.4.194:4000/test";
+    private final static String url = "jdbc:mysql://172.16.4.194:4000/test";
     private final static String username = "root";
     private final static String password = "";
     private final static int colLength = 50;
