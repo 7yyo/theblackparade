@@ -90,7 +90,6 @@ public class jdbcUtil {
                 preparedStatement.addBatch();
             }
             preparedStatement.executeBatch();
-            System.out.println(preparedStatement.toString());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

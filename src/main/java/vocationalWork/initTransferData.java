@@ -26,7 +26,7 @@ public class initTransferData {
 class initTransferDataJob implements Runnable {
     private final static String ip = "172.16.4.104:4000";
     private final static String db = "transfer";
-    private final static String parameter = "useServerPrepStmts=true&cachePrepStmts=true&useConfigs=maxPerformance&rewriteBatchedStatements=true";
+    private final static String parameter = "useServerPrepStmts=true&useConfigs=maxPerformance&rewriteBatchedStatements=true";
     private final static String user = "root";
     private final static String pwd = "yuyang@123";
     private final static int jdbcVersion = 5;
