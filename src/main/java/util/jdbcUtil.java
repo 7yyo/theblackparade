@@ -80,7 +80,7 @@ public class jdbcUtil {
     }
 
 
-    /* begin to execute prepare batch*/
+    /* begin to execute prepare batch */
     public static void executePrepareBatch(PreparedStatement preparedStatement, int batchNum, int valuesNum, String sql) {
         try {
             for (int i = 0; i < batchNum; i++) {
@@ -97,8 +97,8 @@ public class jdbcUtil {
     }
 
     /* rollback */
-    public static void rollback(Connection connection){
-        if(connection != null){
+    public static void rollback(Connection connection) {
+        if (connection != null) {
             try {
                 connection.rollback();
             } catch (SQLException throwables) {
