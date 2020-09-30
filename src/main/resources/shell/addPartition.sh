@@ -21,6 +21,7 @@ echo "Now table "$table" parition_index ======== "$parition_index
 new_parition_name="p"$(($parition_index+1))
 echo "Now table "$table" new_parition_name ======== "$new_parition_name
 
+# shellcheck disable=SC2089
 sql="ALTER TABLE "$db"."$table" ADD PARTITION (PARTITION "$new_parition_name" VALUES LESS THAN (UNIX_TIMESTAMP('"$date"')));"
 echo "Begin to execute sql ========= "$sql
 `$url" $sql";`
