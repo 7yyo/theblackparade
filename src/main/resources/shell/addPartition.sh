@@ -5,7 +5,7 @@ password=$4
 table=$5
 db=$6
 
-echo "#####################################################################"
+echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
 url="mysql -u"$user" -p"$password" -h"$ip" -P"$port" -N -e "
 echo "1.url ========" $url
 
@@ -16,7 +16,7 @@ old_parition_name=`$url"USE INFORMATION_SCHEMA;SELECT PARTITION_NAME FROM PARTIT
 
 if [ ! -n "$old_parition_name" ]; then
 echo "3.table is not exists!"
-echo "#####################################################################"
+echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 exit
 fi
 
@@ -35,4 +35,4 @@ echo "7.Execute success"
 
 now_parition_name=`$url "USE INFORMATION_SCHEMA;SELECT PARTITION_NAME FROM PARTITIONS WHERE TABLE_NAME = '"$table"' ORDER BY PARTITION_ORDINAL_POSITION DESC LIMIT 1;"`
 echo "8..now table "$table" partition ======== "$now_parition_name
-echo "#####################################################################"
+echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
