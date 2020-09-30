@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class prepareSimple {
-    private final static String url = "jdbc:mysql:172.16.4.194:4000/test?useServerPrepStmts=true&cachePrepStmts=true";
+    private final static String url = "jdbc:mysql://172.16.4.194:4000/test?useServerPrepStmts=true&cachePrepStmts=true";
     private final static String username = "root";
     private final static String password = "";
     private final static String sql = "insert into t1(c1,c2) values(?,?)";
