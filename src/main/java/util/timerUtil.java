@@ -1,27 +1,67 @@
 package util;
 
+import bean.tpsCountBean;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class timerUtil {
-    public static void timerTool(int delayTime, int time) {
+    public static void timerTool(int delayTime, int time, int durationTime) {
         Timer timer = new Timer();
-        timeTask task = new timeTask(delayTime, time);
+        timeTask task = new timeTask(durationTime);
         timer.schedule(task, delayTime, time);
+    }
+
+    public static void tpsTool(int delayTime, int time, int durationTime, tpsCountBean tpsCountBean, int rate) {
+        Timer timer = new Timer();
+        tpsTask task = new tpsTask(durationTime, tpsCountBean, rate);
+        timer.schedule(task, delayTime, time);
+    }
+
+    public static void main(String[] args) {
+        timerTool(0, 500, 20);
     }
 }
 
 class timeTask extends TimerTask {
     private int durationTime;
-    private int time;
-    public timeTask(int durationTime, int time) {
+    private int nowTime;
+
+    public timeTask(int durationTime) {
         this.durationTime = durationTime;
-        this.time = time;
     }
+
     @Override
     public void run() {
-        if (durationTime < time) {
-            System.out.println("durationTime is " + durationTime++ + "s");
+        if (nowTime < durationTime) {
+            System.out.println("durationTime is " + ++nowTime + "s");
+        } else {
+            System.exit(0);
+        }
+    }
+}
+
+class tpsTask extends TimerTask {
+    private int durationTime;
+    private int nowTime;
+    private tpsCountBean tpsCount;
+    private int rate;
+
+    public tpsTask(int durationTime, tpsCountBean tpsCount, int rate) {
+        this.durationTime = durationTime;
+        this.tpsCount = tpsCount;
+        this.rate = rate;
+    }
+
+    @Override
+    public void run() {
+        if (nowTime < durationTime) {
+            ++nowTime;
+            if (nowTime % rate == 0) {
+                System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date()) + " || detail:  " + tpsCount.getTransactionCount().intValue() + "/" + nowTime + " | tps: " + tpsCount.getTransactionCount().intValue() / nowTime + "/s");
+            }
         } else {
             System.exit(0);
         }
