@@ -18,7 +18,7 @@ public class parsePrepare {
 class Job implements Runnable {
     private final static String ip = "172.16.4.104:4000";
     private final static String db = "test";
-    private final static String parameter = "useServerPrepStmts=true&cachePrepStmts?useConfigs=maxPerformance&sessionVariables=tidb_batch_commit=1&rewriteBatchedStatements=true&allowMultiQueries=true";
+    private final static String parameter = "useServerPrepStmts=true&useConfigs=maxPerformance&rewriteBatchedStatements=true&allowMultiQueries=true";
     private final static String user = "root";
     private final static String pwd = "";
     private final static int jdbcVersion = 5;
