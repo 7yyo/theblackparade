@@ -16,20 +16,4 @@ public class threadPoolUtil {
             executorService.shutdown();
         }
     }
-
-    public static void startJob(int threadNum, Object job, boolean isWhile) {
-        ExecutorService executorService = null;
-        try {
-            executorService = Executors.newFixedThreadPool(threadNum);
-            while (isWhile) {
-                Thread.sleep(10);
-                executorService.execute((Runnable) job);
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } finally {
-            executorService.shutdown();
-        }
-    }
-
 }
