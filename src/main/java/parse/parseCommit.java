@@ -10,8 +10,9 @@ public class parseCommit {
     private final static int threadNum = 10;
     private final static int delayTime = 0;
     private final static int time = 1000;
+    private final static int durationTime = 600;
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        timerUtil.timerTool(delayTime, time);
+        timerUtil.timerTool(delayTime, time, durationTime);
         threadPoolUtil.startJob(threadNum, new ParseCommitJob());
     }
 }
