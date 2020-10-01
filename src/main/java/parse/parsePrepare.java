@@ -35,7 +35,7 @@ class Job implements Runnable {
             connection = jdbcUtil.getConncetion(ip, db, parameter, user, pwd, jdbcVersion, isAutoCommit);
             preparedStatement = jdbcUtil.initPrepareStatement(connection, sql);
             while (true) {
-                jdbcUtil.executePrepareBatch(preparedStatement, batchNum, valuesNum, sql);
+                jdbcUtil.executePrepareBatch(preparedStatement, batchNum, valuesNum);
                 jdbcUtil.commit(connection);
             }
         } finally {

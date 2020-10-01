@@ -11,8 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class BatchTpsDemo {
-    private static final int threadNum = 100;
+public class prepareTpsDemo {
+    private static final int threadNum = 500;
     private static final int delayTime = 0;
     private static final int time = 1000;
     private static final int durationTime = 600;
@@ -22,18 +22,18 @@ public class BatchTpsDemo {
         tpsCountBean tpsCount = new tpsCountBean();
         timerUtil.tpsTool(delayTime, time, durationTime, tpsCount, rate);
         HikariDataSource hikariDataSource = hikariUtil.getHikari();
-        threadPoolUtil.startJob(threadNum, new batchJob(hikariDataSource, tpsCount));
+        threadPoolUtil.startJob(threadNum, new prepareJob(hikariDataSource, tpsCount));
     }
 }
 
-class batchJob implements Runnable {
+class prepareJob implements Runnable {
     private final static String sql = "insert into t1(c1,c2) values(?,?)";
-    private final static int batchNum = 10;
+    private final static int batchNum = 100;
     private final static int valuesNum = 2;
     private HikariDataSource hikariDataSource;
     private tpsCountBean tpsCount;
 
-    public batchJob(HikariDataSource hikariDataSource, tpsCountBean tpsCount) {
+    public prepareJob(HikariDataSource hikariDataSource, tpsCountBean tpsCount) {
         this.hikariDataSource = hikariDataSource;
         this.tpsCount = tpsCount;
     }
@@ -47,8 +47,7 @@ class batchJob implements Runnable {
                 connection = hikariDataSource.getConnection();
                 preparedStatement = jdbcUtil.initPrepareStatement(connection, sql);
                 if (preparedStatement != null) {
-                    jdbcUtil.executePrepareBatch(preparedStatement, batchNum, valuesNum, sql);
-                    jdbcUtil.commit(connection);
+                    jdbcUtil.executePrepare(preparedStatement, valuesNum);
                     tpsCount.plusOne();
                 }
             } catch (SQLException throwables) {

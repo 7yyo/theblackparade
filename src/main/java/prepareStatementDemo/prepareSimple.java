@@ -21,7 +21,7 @@ public class prepareSimple {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(url, username, password);
             preparedStatement = connection.prepareStatement(sql);
-            for (int i = 0; i < 100; i++) {
+            for (int i = 0; i < 10000; i++) {
                 preparedStatement.setObject(1, RandomStringUtils.randomAlphabetic(colLength));
                 preparedStatement.setObject(2, RandomStringUtils.randomAlphabetic(colLength));
                 preparedStatement.execute();

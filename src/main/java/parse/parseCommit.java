@@ -37,7 +37,7 @@ class ParseCommitJob implements Runnable {
             preparedStatement = jdbcUtil.initPrepareStatement(connection, sql);
             if (preparedStatement != null) {
                 while (true) {
-                    jdbcUtil.executePrepareBatch(preparedStatement, batchNum, valuesNum, sql);
+                    jdbcUtil.executePrepareBatch(preparedStatement, batchNum, valuesNum);
                     jdbcUtil.commit(connection);
                 }
             }

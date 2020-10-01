@@ -79,9 +79,22 @@ public class jdbcUtil {
         }
     }
 
+    /* begin to execute prepare */
+    public static void executePrepare(PreparedStatement preparedStatement, int valuesNum) {
+        try {
+            for (int i = 1; i < valuesNum + 1; i++) {
+                preparedStatement.setObject(i, RandomStringUtils.randomAlphabetic(colLength));
+            }
+//            System.out.println(sql);
+            preparedStatement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
 
     /* begin to execute prepare batch */
-    public static void executePrepareBatch(PreparedStatement preparedStatement, int batchNum, int valuesNum, String sql) {
+    public static void executePrepareBatch(PreparedStatement preparedStatement, int batchNum, int valuesNum) {
         try {
             for (int i = 0; i < batchNum; i++) {
                 for (int j = 1; j < valuesNum + 1; j++) {

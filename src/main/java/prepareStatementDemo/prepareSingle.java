@@ -22,7 +22,7 @@ public class prepareSingle {
         try {
             connection = jdbcUtil.getConncetion(ip, db, parameter, user, pwd, jdbcVersion, isAutoCommit);
             preparedStatement = jdbcUtil.initPrepareStatement(connection, sql);
-            jdbcUtil.executePrepareBatch(preparedStatement, batchNum, valuesNum, sql);
+            jdbcUtil.executePrepareBatch(preparedStatement, batchNum, valuesNum);
         } finally {
             jdbcUtil.closePrepareStatement(preparedStatement);
             jdbcUtil.closeConnection(connection);
