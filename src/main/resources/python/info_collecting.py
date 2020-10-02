@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# 将脚本放在中控机的 tidb-ansible 目录下，执行`python info_gathering.py`
+# tiup - tidb-ansible pwd，execute`python info_gathering.py`
 # The script needs to be executed by the central controller under the tidb-ansible directory
 # eg：cd /home/tidb/tidb-ansible & python info_gathering.py
 
@@ -109,7 +109,7 @@ def collector_pro_data(url):
 
 
 def collect_uname(url, tb):
-    print '系统信息'
+    print 'system info'
     url = url + METRICS_INFO['node_uname'] + step
     data = collector_pro_data(url)
     for item in data:
@@ -121,7 +121,7 @@ def collect_uname(url, tb):
 
 
 def collect_node_count(url, tb):
-    print 'TiDB 集群信息'
+    print 'TiDB cluster info'
     tidb = list()
     pd = list()
     tikv = list()
@@ -147,7 +147,7 @@ def collect_node_count(url, tb):
 
 
 def collect_clu_node(url, tb):
-    print "集群节点信息"
+    print "cluster node info"
     set_ins_list = list(set([i.split(':')[0] for i in INS_LIST]))
     for index, item in enumerate(set_ins_list):
         SET_INS_DICT[item] = 'instance_%s' % index
@@ -168,7 +168,7 @@ def collect_clu_node(url, tb):
 
 
 def collect_capacity(url, tb):
-    print "容量 & region 数量"
+    print "storage & region count"
     url = url + METRICS_INFO['size'] + step
     data = collector_pro_data(url)
     for item in data:
@@ -197,7 +197,7 @@ def collect_qps(url, tb):
 
 
 def collect_hot_region(url, tb):
-    print "热点 region 信息"
+    print "hot region info"
     hot_region_url = url + METRICS_INFO['hot_region'] + step
     data = collector_pro_data(hot_region_url)
     hot_read_region_dict = dict()
@@ -216,7 +216,7 @@ def collect_hot_region(url, tb):
 
 
 def collect_disk_lat(url, tb):
-    print "磁盘延迟信息"
+    print "disk info"
     disk_read_url = url + METRICS_INFO['disk_read'] + step
     disk_write_url = url + METRICS_INFO['disk_write'] + step
     read_data = collector_pro_data(disk_read_url)
