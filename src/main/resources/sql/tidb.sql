@@ -11,14 +11,15 @@ where s.table_name = "sbtest1"
        index_name in (select distinct key_name from information_schema.tidb_indexes where table_name = "sbtest1"))
 group by index_name, p.store_id
 order by index_name, cnt
-    desc;
+desc;
 
+#shard_row_id_bits=4
 create table t1 (
-    id int(11) not null auto_increment,
+    id bigint not null auto_random,
     c1 text default null,
     c2 text default null,
     primary key  (id)
-);
+) pre_split_regions=4;
 
 create table t2 (
     id int not null,
