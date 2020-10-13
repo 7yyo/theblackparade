@@ -40,3 +40,7 @@ partition by range (unix_timestamp(c2)) (
 
 alter table t5 ADD partition (partition p12 values less than (unix_timestamp('2020-10-01 00:00:00')));
 
+explain select /*+ read_from_storage(tiflash[t1]) */ count(1) from t1;
+explain select /*+ hash_agg(),read_from_storage(tiflash[t1]) */ count(1) from t1;
+
+trace format='row' select count(*) from t2;
