@@ -1,5 +1,6 @@
 package vocationalWork;
 
+import bean.tpsCountBean;
 import util.jdbcUtil;
 import util.sqlFileUtil;
 import util.threadPoolUtil;
@@ -11,28 +12,33 @@ import java.util.Random;
 
 public class initTransferData {
     private final static String filePath = "src/main/resources/sql/initTransferTable.sql";
-    private final static String url = "jdbc:mysql://172.16.4.104:4000/test";
+    private final static String url = "jdbc:mysql://172.16.4.194:4000/test";
     private final static String username = "root";
-    private final static String password = "yuyang@123";
+    private final static String password = "";
     private final static int jdbcVersion = 5;
-    private static int threadNum = 10;
+    private static int threadNum = 100;
 
     public static void main(String[] args) {
+        tpsCountBean tpsCount = new tpsCountBean();
         sqlFileUtil.readSqlFile(jdbcVersion, url, username, password, filePath);
-        threadPoolUtil.startJob(threadNum, new initTransferDataJob());
+        threadPoolUtil.startJob(threadNum, new initTransferDataJob(tpsCount));
     }
 }
 
 class initTransferDataJob implements Runnable {
-    private final static String ip = "172.16.4.104:4000";
+    private final static String ip = "172.16.4.194:4000";
     private final static String db = "transfer";
     private final static String parameter = "useServerPrepStmts=true&useConfigs=maxPerformance&rewriteBatchedStatements=true";
     private final static String user = "root";
-    private final static String pwd = "yuyang@123";
+    private final static String pwd = "";
     private final static int jdbcVersion = 5;
     private final static int isAutoCommit = 1;
     private final static String sql = "insert into account_card_info(card_number,card_balance) values(?,?)";
-    private final static int batchNum = 1;
+    private final static int batchNum = 100;
+    private tpsCountBean tpsCount;
+    public initTransferDataJob(tpsCountBean tpsCount){
+        this.tpsCount = tpsCount;
+    }
     @Override
     public void run() {
         Connection connection = null;
@@ -50,6 +56,12 @@ class initTransferDataJob implements Runnable {
                     }
                     preparedStatement.executeBatch();
                     jdbcUtil.commit(connection);
+                    if(tpsCount.getTransactionCount().intValue() < 10000000/100){
+                        tpsCount.plusOne();
+                    }else{
+                        System.exit(0);
+                    }
+
                 }
             }
         } catch (SQLException throwables) {
