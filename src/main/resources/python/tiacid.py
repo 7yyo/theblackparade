@@ -38,7 +38,6 @@ except:
     print(" ["+str(time.asctime( time.localtime(time.time())))+"] Create data successfully.")
 
 n = 0
-
 for i in range(DATAFORNUM):
     sql = "insert into account values"
     for j in range(1, BATCHSIZE + 1):
@@ -83,7 +82,6 @@ def runTransfer(connection):
             connection.rollback()
     connection.close()
 
-
 threadList = []
 for i in range(THREADNUM):
     connection = pymysql.connect(host = HOST,port = PORT,user = USER,passwd = PASSWD,db = DB,charset = CHARSET)
@@ -92,7 +90,6 @@ for i in range(THREADNUM):
     thread.start()
     print(" ["+str(time.asctime( time.localtime(time.time())))+"] Thread start successfully. thread id :=" + str(i))
 
-
 print(" ["+str(time.asctime( time.localtime(time.time())))+"] Transfering ...")
 
 for thread in threadList:
@@ -100,7 +97,6 @@ for thread in threadList:
 
 print(" ["+str(time.asctime( time.localtime(time.time())))+"] Transfer finish ...")
 print(" ["+str(time.asctime( time.localtime(time.time())))+"] Start check acid result.")
-
 
 totalBalance = 0
 totalFlow = 0
@@ -125,9 +121,3 @@ if int(totalFlow) != 2 * TRANSFERFORNUM * THREADNUM:
     print(" ["+str(time.asctime( time.localtime(time.time())))+"] Number of flow = " + str(totalFlow) + " is error, should be " + str(2 * TRANSFERFORNUM * THREADNUM))
 else:
     print(" ["+str(time.asctime( time.localtime(time.time())))+"] Number of flow = " + str(totalFlow) + ". success!")
-
-
-
-
-
-
