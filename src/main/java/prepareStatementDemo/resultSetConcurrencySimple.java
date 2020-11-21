@@ -4,10 +4,10 @@ import java.sql.*;
 
 public class resultSetConcurrencySimple {
 
-    private final static String url = "jdbc:mysql://localhost:3306/test?useServerPrepStmts=true&cachePrepStmts=true&useConfigs=maxPerformance";
+    private final static String url = "jdbc:mysql://localhost:4000/test?useServerPrepStmts=true&cachePrepStmts=true&useConfigs=maxPerformance";
     private final static String username = "root";
-    private final static String password = "yuyang@123";
-    private final static String sql = "select id,dt1,dt2 from t3 where id = ?";
+    private final static String password = "";
+    private final static String sql = "select d1,id,d2 from t where id = ?";
     private final static int colLength = 50;
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
@@ -17,7 +17,7 @@ public class resultSetConcurrencySimple {
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(url, username, password);
             preparedStatement = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            preparedStatement.setObject(1, "2");
+            preparedStatement.setObject(1, "1");
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.beforeFirst();
             while (resultSet.next()) {
@@ -43,6 +43,8 @@ public class resultSetConcurrencySimple {
             if (preparedStatement != null) preparedStatement.close();
             if (connection != null) connection.close();
         }
+
+
     }
 
 }
