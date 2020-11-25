@@ -32,7 +32,7 @@
           <stringProp name="connectionAge">5000</stringProp>
           <stringProp name="connectionProperties"></stringProp>
           <stringProp name="dataSource">jdbc</stringProp>
-          <stringProp name="dbUrl">jdbc:mysql://172.16.249.2:4000/test</stringProp>
+          <stringProp name="dbUrl">jdbc:mysql://172.16.249.2:4000/test?allowMultiQueries=true</stringProp>
           <stringProp name="driver">com.mysql.jdbc.Driver</stringProp>
           <stringProp name="initQuery"></stringProp>
           <boolProp name="keepAlive">true</boolProp>
@@ -44,54 +44,6 @@
           <stringProp name="trimInterval">60000</stringProp>
           <stringProp name="username">root</stringProp>
         </JDBCDataSource>
-        <hashTree/>
-        <JavaSampler guiclass="JavaTestSamplerGui" testclass="JavaSampler" testname="Java Request" enabled="true">
-          <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" enabled="true">
-            <collectionProp name="Arguments.arguments">
-              <elementProp name="Sleep_Time" elementType="Argument">
-                <stringProp name="Argument.name">Sleep_Time</stringProp>
-                <stringProp name="Argument.value">100</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-              <elementProp name="Sleep_Mask" elementType="Argument">
-                <stringProp name="Argument.name">Sleep_Mask</stringProp>
-                <stringProp name="Argument.value">0xFF</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-              <elementProp name="Label" elementType="Argument">
-                <stringProp name="Argument.name">Label</stringProp>
-                <stringProp name="Argument.value"></stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-              <elementProp name="ResponseCode" elementType="Argument">
-                <stringProp name="Argument.name">ResponseCode</stringProp>
-                <stringProp name="Argument.value"></stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-              <elementProp name="ResponseMessage" elementType="Argument">
-                <stringProp name="Argument.name">ResponseMessage</stringProp>
-                <stringProp name="Argument.value"></stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-              <elementProp name="Status" elementType="Argument">
-                <stringProp name="Argument.name">Status</stringProp>
-                <stringProp name="Argument.value">OK</stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-              <elementProp name="SamplerData" elementType="Argument">
-                <stringProp name="Argument.name">SamplerData</stringProp>
-                <stringProp name="Argument.value"></stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-              <elementProp name="ResultData" elementType="Argument">
-                <stringProp name="Argument.name">ResultData</stringProp>
-                <stringProp name="Argument.value"></stringProp>
-                <stringProp name="Argument.metadata">=</stringProp>
-              </elementProp>
-            </collectionProp>
-          </elementProp>
-          <stringProp name="classname">org.apache.jmeter.protocol.java.test.JavaTest</stringProp>
-        </JavaSampler>
         <hashTree/>
         <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
@@ -132,67 +84,15 @@
         <hashTree/>
         <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="JDBC Request" enabled="true">
           <stringProp name="dataSource">jdbc</stringProp>
-          <stringProp name="query">insert into t1 values(?,?);</stringProp>
-          <stringProp name="queryArguments">3,3</stringProp>
-          <stringProp name="queryArgumentsTypes">varchar,varchar</stringProp>
+          <stringProp name="query">select * from t1 where id = 1;select * from t1 where id = 2;select * from t1 where id = 10;</stringProp>
+          <stringProp name="queryArguments"></stringProp>
+          <stringProp name="queryArgumentsTypes"></stringProp>
           <stringProp name="queryTimeout"></stringProp>
-          <stringProp name="queryType">Prepared Update Statement</stringProp>
+          <stringProp name="queryType">Callable Statement</stringProp>
           <stringProp name="resultSetHandler">Store as String</stringProp>
           <stringProp name="resultSetMaxRows"></stringProp>
           <stringProp name="resultVariable"></stringProp>
           <stringProp name="variableNames"></stringProp>
-        </JDBCSampler>
-        <hashTree>
-          <JDBCDataSource guiclass="TestBeanGUI" testclass="JDBCDataSource" testname="JDBC Connection Configuration" enabled="true">
-            <boolProp name="autocommit">true</boolProp>
-            <stringProp name="checkQuery">select 1</stringProp>
-            <stringProp name="connectionAge">5000</stringProp>
-            <stringProp name="connectionProperties"></stringProp>
-            <stringProp name="dataSource">jdbc</stringProp>
-            <stringProp name="dbUrl">jdbc:mysql://172.16.249.2:4000</stringProp>
-            <stringProp name="driver">com.mysql.jdbc.Driver</stringProp>
-            <stringProp name="initQuery"></stringProp>
-            <boolProp name="keepAlive">true</boolProp>
-            <stringProp name="password"></stringProp>
-            <stringProp name="poolMax">0</stringProp>
-            <boolProp name="preinit">false</boolProp>
-            <stringProp name="timeout">10000</stringProp>
-            <stringProp name="transactionIsolation">DEFAULT</stringProp>
-            <stringProp name="trimInterval">60000</stringProp>
-            <stringProp name="username">root</stringProp>
-          </JDBCDataSource>
-          <hashTree/>
-          <JDBCDataSource guiclass="TestBeanGUI" testclass="JDBCDataSource" testname="JDBC Connection Configuration" enabled="true">
-            <boolProp name="autocommit">true</boolProp>
-            <stringProp name="checkQuery">select 1</stringProp>
-            <stringProp name="connectionAge">5000</stringProp>
-            <stringProp name="connectionProperties"></stringProp>
-            <stringProp name="dataSource">jdbc</stringProp>
-            <stringProp name="dbUrl">jdbc:mysql://172.16.249.2:4000</stringProp>
-            <stringProp name="driver">com.mysql.jdbc.Driver</stringProp>
-            <stringProp name="initQuery"></stringProp>
-            <boolProp name="keepAlive">true</boolProp>
-            <stringProp name="password"></stringProp>
-            <stringProp name="poolMax">0</stringProp>
-            <boolProp name="preinit">false</boolProp>
-            <stringProp name="timeout">10000</stringProp>
-            <stringProp name="transactionIsolation">DEFAULT</stringProp>
-            <stringProp name="trimInterval">60000</stringProp>
-            <stringProp name="username">root</stringProp>
-          </JDBCDataSource>
-          <hashTree/>
-        </hashTree>
-        <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="JDBC Request" enabled="true">
-          <stringProp name="dataSource">jdbc</stringProp>
-          <stringProp name="queryType">Prepared Select Statement</stringProp>
-          <stringProp name="query">select * from t1 where id = ?;</stringProp>
-          <stringProp name="queryArguments">3</stringProp>
-          <stringProp name="queryArgumentsTypes">varchar</stringProp>
-          <stringProp name="variableNames"></stringProp>
-          <stringProp name="resultVariable"></stringProp>
-          <stringProp name="queryTimeout"></stringProp>
-          <stringProp name="resultSetMaxRows">1</stringProp>
-          <stringProp name="resultSetHandler">Store as String</stringProp>
         </JDBCSampler>
         <hashTree/>
       </hashTree>
