@@ -1,0 +1,102 @@
+global:
+  user: tidb
+  ssh_port: 22
+  deploy_dir: /data0
+  data_dir: /data0/data
+  os: linux
+  arch: amd64
+monitored:
+  node_exporter_port: 19007
+  blackbox_exporter_port: 19077
+  deploy_dir: /data0/monitor-19107
+  data_dir: /data0/monitor_data
+  log_dir: /data0/monitor-19107/log
+server_configs:
+  tidb:
+    binlog.enable: false
+    binlog.ignore-error: true
+    log.level: info
+    log.slow-threshold: 300
+  tikv:
+    pessimistic-txn.enabled: true
+  pd:
+    replication.enable-placement-rules: true
+  tiflash: {}
+  tiflash-learner: {}
+  pump: {}
+  drainer: {}
+  cdc: {}
+tidb_servers:
+  - host: 172.16.4.88
+    ssh_port: 22
+    port: 4007
+    status_port: 10007
+    deploy_dir: /data0/tidb-4007
+    arch: amd64
+    os: linux
+  - host: 172.16.4.89
+    ssh_port: 22
+    port: 4007
+    status_port: 10007
+    deploy_dir: /data0/tidb-4007
+    arch: amd64
+    os: linux
+  - host: 172.16.4.91
+    ssh_port: 22
+    port: 4007
+    status_port: 10007
+    deploy_dir: /data0/tidb-4007
+    arch: amd64
+    os: linux
+tikv_servers:
+  - host: 172.16.4.88
+    ssh_port: 22
+    port: 20007
+status_port: 20077
+  deploy_dir: /data1/tikv2
+  data_dir: /data1/tikv2/data
+  arch: amd64
+  os: linux
+pd_servers:
+  - host: 172.16.4.88
+    ssh_port: 22
+    name: pd-172.16.4.88-2307
+    client_port: 2307
+    peer_port: 2377
+    deploy_dir: /data2/pd-2307
+    data_dir: /data2/pd_data
+    arch: amd64
+    os: linux
+  - host: 172.16.4.89
+    ssh_port: 22
+    name: pd-172.16.4.89-2307
+    client_port: 2307
+    peer_port: 2377
+    deploy_dir: /data2/pd-2307
+    data_dir: /data2/pd_data
+    arch: amd64
+    os: linux
+  - host: 172.16.4.91
+    ssh_port: 22
+    name: pd-172.16.4.91-2307
+    client_port: 2307
+    peer_port: 2377
+    deploy_dir: /data2/pd-2307
+    data_dir: /data2/pd_data
+    arch: amd64
+    os: linux
+monitoring_servers:
+  - host: 172.16.4.89
+    ssh_port: 22
+    port: 10077
+    deploy_dir: /data0/prometheus-10077
+    data_dir: /data0/data/prometheus-10077
+    arch: amd64
+    os: linux
+grafana_servers:
+  - host: 172.16.4.89
+    ssh_port: 22
+    port: 3007
+    deploy_dir: /data0/grafana-3007
+    arch: amd64
+    os: linux
