@@ -14,7 +14,7 @@ public class jdbcUtil {
 
     /* get connection */
     public static Connection getConncetion(String ip, String database, String parameter, String username, String password, int jdbcVersion, int isAutoCommit) {
-        String url = "jdbc:mysql://" + ip + "/" + database + "?" + parameter;
+        String url = "jdbc:mysql:loadbalance://" + ip + "/" + database + "?" + parameter;
         Connection connection = null;
         try {
             switch (jdbcVersion) {

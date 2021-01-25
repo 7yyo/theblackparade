@@ -78,6 +78,46 @@
             <artifactId>joda-time</artifactId>
             <version>2.10.8</version>
         </dependency>
+        <dependency>
+            <groupId>org.tikv</groupId>
+            <artifactId>tikv-client-java</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.pingcap.ticdc.cdc</groupId>-->
+<!--            <artifactId>ticdc-decoder</artifactId>-->
+<!--            <version>4.0.5-SNAPSHOT</version>-->
+<!--        </dependency>-->
+        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.75</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/junit/junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.6.3</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -118,13 +158,17 @@
                     <artifactId>maven-site-plugin</artifactId>
                     <version>3.7.1</version>
                 </plugin>
-<!--                <plugin>-->
-<!--                    <artifactId>maven-project-info-reports-plugin</artifactId>-->
-<!--                    <version>3.0.0</version>-->
-<!--                </plugin>-->
-
-
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration><![CDATA[
+                    ]]><source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 </project>

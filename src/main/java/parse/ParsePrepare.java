@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class parsePrepare {
+public class ParsePrepare {
     private static int threadNum = 50;
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {

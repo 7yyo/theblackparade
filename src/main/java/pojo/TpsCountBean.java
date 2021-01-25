@@ -1,8 +1,8 @@
-package bean;
+package pojo;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class tpsCountBean {
+public class TpsCountBean {
 
     private static AtomicInteger transactionCount;
 
@@ -11,10 +11,10 @@ public class tpsCountBean {
     }
 
     public void setTransactionCount(AtomicInteger transactionCount) {
-        tpsCountBean.transactionCount = transactionCount;
+        TpsCountBean.transactionCount = transactionCount;
     }
 
-    public tpsCountBean() {
+    public TpsCountBean() {
         transactionCount = new AtomicInteger(0);
     }
 

@@ -6,11 +6,12 @@ import util.timerUtil;
 
 import java.sql.*;
 
-public class parseCommit {
+public class ParseCommit {
     private final static int threadNum = 10;
     private final static int delayTime = 0;
     private final static int time = 1000;
     private final static int durationTime = 600;
+
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         timerUtil.timerTool(delayTime, time, durationTime);
         threadPoolUtil.startJob(threadNum, new ParseCommitJob());
@@ -18,6 +19,7 @@ public class parseCommit {
 }
 
 class ParseCommitJob implements Runnable {
+
     private final static String ip = "172.16.4.194:4000";
     private final static String db = "test";
     private final static String parameter = "useServerPrepStmts=true&cachePrepStmts&prepStmtCacheSqlLimit=2048&useConfigs=maxPerformance&rewriteBatchedStatements=true&allowMultiQueries=true";
@@ -28,22 +30,23 @@ class ParseCommitJob implements Runnable {
     private final static int batchNum = 0;
     private final static int valuesNum = 1000;
     private final static String sql = "insert into t1(c1,c2) values(?,?)";
+
     @Override
     public void run() {
-        Connection connection = null;
-        PreparedStatement preparedStatement = null;
+        Connection c = null;
+        PreparedStatement ps = null;
         try {
-            connection = jdbcUtil.getConncetion(ip, db, parameter, user, pwd, jdbcVersion, isAutoCommit);
-            preparedStatement = jdbcUtil.initPrepareStatement(connection, sql);
-            if (preparedStatement != null) {
+            c = jdbcUtil.getConncetion(ip, db, parameter, user, pwd, jdbcVersion, isAutoCommit);
+            ps = jdbcUtil.initPrepareStatement(c, sql);
+            if (ps != null) {
                 while (true) {
-                    jdbcUtil.executePrepareBatch(preparedStatement, batchNum, valuesNum);
-                    jdbcUtil.commit(connection);
+                    jdbcUtil.executePrepareBatch(ps, batchNum, valuesNum);
+                    jdbcUtil.commit(c);
                 }
             }
         } finally {
-            jdbcUtil.closePrepareStatement(preparedStatement);
-            jdbcUtil.closeConnection(connection);
+            jdbcUtil.closePrepareStatement(ps);
+            jdbcUtil.closeConnection(c);
         }
     }
 }

@@ -15,7 +15,7 @@ public class statementThread {
 }
 
 class StatmentJob extends Thread {
-    private final static String ip = "172.16.4.194:4000";
+    private final static String ip = "172.18.0.1:4000";
     private final static String db = "test";
     private final static String parameter = "";
     private final static String user = "root";

@@ -4,8 +4,7 @@ import java.sql.*;
 
 public class streamDemo {
 
-    // &defaultFetchSize=-2147483648
-    private final static String url = "jdbc:mysql://172.16.4.105:4000/test?useServerPrepStmts=true&cachePrepStmts=true&useConfigs=maxPerformance";
+    private final static String url = "jdbc:mysql://172.16.4.35:4007/test?useServerPrepStmts=true&cachePrepStmts=true&useConfigs=maxPerformance&defaultFetchSize=-2147483648";
     private final static String username = "root";
     private final static String password = "yuyang@123";
     private final static String sql = "select * from t2";
@@ -26,6 +25,7 @@ public class streamDemo {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {
+            assert resultSet != null;
             resultSet.close();
             preparedStatement.close();
             connection.close();

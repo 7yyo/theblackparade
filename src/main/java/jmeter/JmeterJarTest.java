@@ -5,26 +5,26 @@ import org.apache.jmeter.protocol.java.sampler.AbstractJavaSamplerClient;
 import org.apache.jmeter.protocol.java.sampler.JavaSamplerContext;
 import org.apache.jmeter.samplers.SampleResult;
 
-
 import java.sql.*;
 
 public class JmeterJarTest extends AbstractJavaSamplerClient {
 
     private String url = "jdbc:mysql://172.16.249.2:4000/test";
-    private String sql = "select * from t1 where id = ?;";
     private String username = "root";
     private String password = "";
+    private String sql = "select * from t1 where id = ?;";
 
-    private Connection connection;
-    private PreparedStatement preparedStatement;
+    private Connection c;
+    private PreparedStatement ps;
 
     @Override
     public void setupTest(JavaSamplerContext javaSamplerContext) {
         try {
+
             password = javaSamplerContext.getParameter("password");
             Class.forName("com.mysql.jdbc.Driver");
-            connection.setAutoCommit(false);
-            connection = DriverManager.getConnection(url, username, password);
+            c.setAutoCommit(false);
+            c = DriverManager.getConnection(url, username, password);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -37,15 +37,15 @@ public class JmeterJarTest extends AbstractJavaSamplerClient {
         sampleResult.setDataEncoding("UTF-8");
         ResultSet resultSet = null;
         try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setObject(1, "1");
-            resultSet = preparedStatement.executeQuery();
+            ps = c.prepareStatement(sql);
+            ps.setObject(1, "1");
+            resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 System.out.println(resultSet.getString("c1"));
             }
-            connection.commit();
+            c.commit();
             resultSet.close();
-            preparedStatement.close();
+            ps.close();
         } catch (SQLException throwables) {
             sampleResult.setSuccessful(false);
             throwables.printStackTrace();
@@ -58,7 +58,7 @@ public class JmeterJarTest extends AbstractJavaSamplerClient {
     @Override
     public void teardownTest(JavaSamplerContext javaSamplerContext) {
         try {
-            connection.close();
+            c.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

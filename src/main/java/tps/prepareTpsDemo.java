@@ -1,6 +1,6 @@
 package tps;
 
-import bean.tpsCountBean;
+import pojo.TpsCountBean;
 import com.zaxxer.hikari.HikariDataSource;
 import util.hikariUtil;
 import util.jdbcUtil;
@@ -19,7 +19,7 @@ public class prepareTpsDemo {
     private static final int rate = 5;
 
     public static void main(String[] args) {
-        tpsCountBean tpsCount = new tpsCountBean();
+        TpsCountBean tpsCount = new TpsCountBean();
         timerUtil.tpsTool(delayTime, time, durationTime, tpsCount, rate);
         HikariDataSource hikariDataSource = hikariUtil.getHikari();
         threadPoolUtil.startJob(threadNum, new prepareJob(hikariDataSource, tpsCount));
@@ -31,9 +31,9 @@ class prepareJob implements Runnable {
     private final static int batchNum = 100;
     private final static int valuesNum = 2;
     private HikariDataSource hikariDataSource;
-    private tpsCountBean tpsCount;
+    private TpsCountBean tpsCount;
 
-    public prepareJob(HikariDataSource hikariDataSource, tpsCountBean tpsCount) {
+    public prepareJob(HikariDataSource hikariDataSource, TpsCountBean tpsCount) {
         this.hikariDataSource = hikariDataSource;
         this.tpsCount = tpsCount;
     }

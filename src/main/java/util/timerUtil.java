@@ -1,6 +1,6 @@
 package util;
 
-import bean.tpsCountBean;
+import pojo.TpsCountBean;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,7 +14,7 @@ public class timerUtil {
         timer.schedule(task, delayTime, time);
     }
 
-    public static void tpsTool(int delayTime, int time, int durationTime, tpsCountBean tpsCountBean, int rate) {
+    public static void tpsTool(int delayTime, int time, int durationTime, TpsCountBean tpsCountBean, int rate) {
         Timer timer = new Timer();
         tpsTask task = new tpsTask(durationTime, tpsCountBean, rate);
         timer.schedule(task, delayTime, time);
@@ -46,10 +46,10 @@ class timeTask extends TimerTask {
 class tpsTask extends TimerTask {
     private int durationTime;
     private int nowTime;
-    private tpsCountBean tpsCount;
+    private TpsCountBean tpsCount;
     private int rate;
 
-    public tpsTask(int durationTime, tpsCountBean tpsCount, int rate) {
+    public tpsTask(int durationTime, TpsCountBean tpsCount, int rate) {
         this.durationTime = durationTime;
         this.tpsCount = tpsCount;
         this.rate = rate;
@@ -66,5 +66,10 @@ class tpsTask extends TimerTask {
             System.exit(0);
         }
     }
+
+    public static void updateTimestamp(String timestamp){
+
+    }
+
 }
 

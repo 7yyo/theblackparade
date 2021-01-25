@@ -1,6 +1,6 @@
 package vocationalWork;
 
-import bean.tpsCountBean;
+import pojo.TpsCountBean;
 import util.jdbcUtil;
 import util.sqlFileUtil;
 import util.threadPoolUtil;
@@ -19,7 +19,7 @@ public class initTransferData {
     private static int threadNum = 100;
 
     public static void main(String[] args) {
-        tpsCountBean tpsCount = new tpsCountBean();
+        TpsCountBean tpsCount = new TpsCountBean();
         sqlFileUtil.readSqlFile(jdbcVersion, url, username, password, filePath);
         threadPoolUtil.startJob(threadNum, new initTransferDataJob(tpsCount));
     }
@@ -35,8 +35,8 @@ class initTransferDataJob implements Runnable {
     private final static int isAutoCommit = 1;
     private final static String sql = "insert into account_card_info(card_number,card_balance) values(?,?)";
     private final static int batchNum = 100;
-    private tpsCountBean tpsCount;
-    public initTransferDataJob(tpsCountBean tpsCount){
+    private TpsCountBean tpsCount;
+    public initTransferDataJob(TpsCountBean tpsCount){
         this.tpsCount = tpsCount;
     }
     @Override
